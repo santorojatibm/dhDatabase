@@ -39,7 +39,13 @@ var _rcUnknown = 99;
 //-----------------------------------------------------------------------------
 // Main code body
 //-----------------------------------------------------------------------------
-console.log("DreamHome.dhDatabase service ==> Begin Execution. " + process.env.mongourl);
+var mongourl = process.env.mongourl;
+var replaced = str.replace(/%([^%]+)%/g, function(_,n) {
+    return process.env[n];
+})
+mongourl = replaced;
+
+console.log("DreamHome.dhDatabase service ==> Begin Execution. " + mongourl);
 
 // wait for DB module to fully initialize and connect to the backend DB
 // we don't want to start the node.js server listening till we know we are fully connected to the DB
