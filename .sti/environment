@@ -1,3 +1,3 @@
 mongourl0=mongodb://169.45.196.58:27017/dhOpenShift
-mongourl=mongodb://172.30.198.134:27017/dreamhome
+mongourl=mongodb://172.30.198.134:27017/dhOpenShift
 mongourl2=mongodb://%MONGODB_SERVICE_HOST%:%MONGODB_SERVICE_PORT%/dreamhome
