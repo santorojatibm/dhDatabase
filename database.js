@@ -40,7 +40,8 @@ var _rcUnknown = 99;
 // Main code body
 //-----------------------------------------------------------------------------
 var mongourl = process.env.mongourl;
-var replaced = str.replace(/%([^%]+)%/g, function(_,n) {
+var replaced = mongourl.replace(/%([^%]+)%/g, function(_,n) 
+{
     return process.env[n];
 })
 mongourl = replaced;
