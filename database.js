@@ -39,12 +39,12 @@ var _rcUnknown = 99;
 //-----------------------------------------------------------------------------
 // Main code body
 //-----------------------------------------------------------------------------
-var mongourl = process.env.mongourl2;
-var replaced = mongourl.replace(/%([^%]+)%/g, function(_,n) 
-{
-    return process.env[n];
-})
-mongourl = replaced;
+//var mongourl = process.env.mongourl2;
+//var replaced = mongourl.replace(/%([^%]+)%/g, function(_,n) 
+//{
+//    return process.env[n];
+//})
+//mongourl = replaced;
 
 console.log("DreamHome.dhDatabase service ==> Begin Execution. " + mongourl);
 
