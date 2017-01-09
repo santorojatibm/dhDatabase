@@ -125,6 +125,13 @@ function _dbInit(callback)
   // test to be sure we are not already connected
   if(_dbConnectedInd==false)
   { // not yet connected, proceed and connect.
+    // check if we have a local mongoDB service within the OpenShift project
+    var mongoURL = _findMongoService();
+    if( mongoURL )
+    { // we found a local mongoDB within OpenShift, we will now use this DB 
+      _mongoURL = mongoURL;
+    }
+
     // setup mongodb connection options
     var connectOptions = 
     { server: { poolSize:2,
@@ -132,7 +139,7 @@ function _dbInit(callback)
               }
     };
 
-    // now connected to mongodb
+    // now connect to mongodb
     _mongoClient.connect(_mongoURL+'?maxPoolSize=8', connectOptions, function(err, database) 
     {
       if(!err)
@@ -150,7 +157,7 @@ function _dbInit(callback)
         // set/mark us as now connected to the DB 
         _dbConnectedInd = true;    
 
-        console.log("  ... connected to the DB successfully!");
+        console.log("  ... connected to the DB successfully! " + _mongoURL);
         callback();
       }
       else
@@ -162,6 +169,37 @@ function _dbInit(callback)
       }
     }); 
   }
+}
+
+// tries to locate the mongo DB within the same OpenShift project
+// looks for environment variable defs that point to the mongoDB
+// if these defs are found it uses these to create the mongoURL dynamically
+function _findMongoService()
+{
+  console.log("helpers._findMongoService() has been called.");
+
+  var mongoURL = null;
+  var host     = process.env.MONGODB_SERVICE_HOST;
+  var port     = process.env.MONGODB_SERVICE_PORT;
+  if(host && port)
+  { // we have located the mongoDB service host:port via env vars
+    // let's look for the login details next
+
+    var database = process.env.MONGODB_DATABASE || "dreamhome";
+    var user     = process.env.MONGODB_USER     || "root";
+    var password = process.env.MONGODB_PASSWORD || "Jan44Feb!";
+    //var database = process.env.MONGODB_DATABASE;
+    //var user     = process.env.MONGODB_USER;
+    //var password = process.env.MONGODB_PASSWORD;
+   
+    // Example URL endpoint "mongodb://root:Jan44Feb!@172.30.198.134:27017/dreamhome"
+    mongoURL = "mongodb://"+user+":"+password+"@"+host+":"+port+"/"+database;
+
+    console.log("  ... local mongoDB found, URL="+mongoURL);
+  }
+
+
+  return mongoURL;
 }
 
 // generates a unique next id from the Counter collection
@@ -243,12 +281,12 @@ function _createCounterColl(callback)
     console.log("  ... Counter collection has been dropped, we will rebuid it now.");
 
     // Now rebuild/create the Counter collection and add the records.
-    // define all the counter records each with default sequence key set to 1000
-    counterRecords = [{ _id:_pknAgentId,        seq:1000 },
-                      { _id:_pknClientId,       seq:1000 }, 
-                      { _id:_pknPropertyId,     seq:1000 }, 
-                      { _id:_pknOfficeId,       seq:1000 }, 
-                      { _id:_pknNotificationId, seq:1000 }
+    // define all the counter records each with default sequence key (1000 - 5000)
+    counterRecords = [{ _id:_pknAgentId,        seq:999  },
+                      { _id:_pknPropertyId,     seq:1999 }, 
+                      { _id:_pknOfficeId,       seq:2999 }, 
+                      { _id:_pknClientId,       seq:3999 }, 
+                      { _id:_pknNotificationId, seq:4999 }
                      ];
     // insert the records
     _crefCounter.insertMany( counterRecords, {w:1, j:true},
