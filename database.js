@@ -383,8 +383,8 @@ function _createClientColl()
           clientInfo:{address:'101 Valley Steet',city:'Glendale',state:'California',zip:'91201',phone:'555-676-8907',email:'jh@music.com'},
           agentId:1000,
           suggestedProperties:[{propertyId:2000,propertyState:0,askingPrice:320000.00,rating:0,comments:[{comment:'This is a beautiful home'}]}],
-          minAskingPrice=200000.00,
-          maxAskingPrice=400000.00
+          minAskingPrice:200000.00,
+          maxAskingPrice:400000.00
          };
 
        cref.insertOne( jsonRecord, {w:1, j:true},
