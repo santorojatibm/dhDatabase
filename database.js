@@ -511,7 +511,7 @@ function _createPropertyColl()
       var jsonRecord = 
         {propertyId:pkId,
          location:{address:'1024 College',city:'Wheaton',state:'California',zip:'91330',longitude:'35.601623',latitude:'-78.245908'},
-         sqFeet:2895,numBeds:4,numBaths:3,yearBuilt:'1970'description:'Two blocks from university',askingPrice:233000.00
+         sqFeet:2895,numBeds:4,numBaths:3,yearBuilt:'1970',description:'Two blocks from university',askingPrice:233000.00
         };
 
       cref.insertOne( jsonRecord, {w:1, j:true},
