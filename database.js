@@ -380,9 +380,11 @@ function _createClientColl()
        var jsonRecord = 
          {clientId:pkId,
           clientName:{clientFN:'Richard',clientLN:'Hendrix'},
-          clientAddr:{address:'101',street:'Valley Steet',city:'Glendale',state:'California'},
-          agentId:1001,
-          suggestedProperties:[{propertyId:1001,propertyState:0,rating:0,comments:[{comment:'This is a beautiful home'}]}]
+          clientInfo:{address:'101 Valley Steet',city:'Glendale',state:'California',zip:'91201',phone:'555-676-8907',email:'jh@music.com'},
+          agentId:1000,
+          suggestedProperties:[{propertyId:2000,propertyState:0,askingPrice:320000.00,rating:0,comments:[{comment:'This is a beautiful home'}]}],
+          minAskingPrice=200000.00,
+          maxAskingPrice=400000.00
          };
 
        cref.insertOne( jsonRecord, {w:1, j:true},
@@ -412,10 +414,10 @@ function _createAgentColl()
      if(!err)
      { // pkId generated 
        var jsonRecord = 
-         {agentId:pkId,agentId:1001,
+         {agentId:pkId,
           agentData:{agentFN:'Dinesh',agentLN:'Chugtai',agentLicense:'CAL-34917'},
-          officeId:1001,
-          properties:[{propertyId:'1001',clientId:'1001',propertyState:0}]
+          officeId:3000,
+          properties:[{propertyId:'2000',clientId:'4000',propertyState:0}]
          };
 
        cref.insertOne( jsonRecord, {w:1, j:true},
@@ -445,7 +447,7 @@ function _createNotificationColl()
     if(!err)
     { // pkId generated 
       var jsonRecord = 
-        {notificationId:pkId,agentId:1001,clientId:1001};
+        {notificationId:pkId,agentId:1000,clientId:4000};
 
       cref.insertOne( jsonRecord, {w:1, j:true},
       function(err,result)
@@ -475,7 +477,7 @@ function _createOfficeColl()
     { // pkId generated 
       var jsonRecord = 
         {officeId:pkId,officeName:'Valley North',officeManager:'Erlich Bachman',
-         officeAddr:{address:'223',street:'Mountain Drive',city:'Buena Vista',state:'California'},
+         officeAddr:{address:'223 Mountain Drive',city:'Buena Vista',state:'California',zip:'91220'},
          numProperties:0
         };
 
@@ -508,8 +510,8 @@ function _createPropertyColl()
     { // pkId generated 
       var jsonRecord = 
         {propertyId:pkId,
-         location:{address:'1024',street:'College',city:'Wheaton',state:'California',longitude:'35.601623',latitude:'-78.245908'},
-         sqFeet:2895,numBeds:4,numBaths:3,description:'Two blocks from university'
+         location:{address:'1024 College',city:'Wheaton',state:'California',zip:'91330',longitude:'35.601623',latitude:'-78.245908'},
+         sqFeet:2895,numBeds:4,numBaths:3,yearBuilt:'1970'description:'Two blocks from university',askingPrice:233000.00
         };
 
       cref.insertOne( jsonRecord, {w:1, j:true},
@@ -532,8 +534,8 @@ function _createPropertyColl()
     { // pkId generated 
       var jsonRecord = 
         {propertyId:pkId,
-         location:{address:'435',street:'Main',city:'Springfield',state:'California',longitude:'36.507623',latitude:'-79.145509'},
-         sqFeet:3200,numBeds:5,numBaths:3,description:'Nice cottage by lake'
+         location:{address:'435 Main',city:'Springfield',state:'California',zip:'91440',longitude:'36.507623',latitude:'-79.145509'},
+         sqFeet:3200,numBeds:5,numBaths:3,yearBuilt:'1982',description:'Nice cottage by lake',askingPrice:345000.00
         };
 
       cref.insertOne( jsonRecord, {w:1, j:true},
@@ -556,8 +558,8 @@ function _createPropertyColl()
     { // pkId generated 
       var jsonRecord = 
         {propertyId:pkId,
-         location:{address:'2240',street:'Berlin',city:'Florence',state:'California',longitude:'31.086579',latitude:'-72.357987'},
-         sqFeet:3950,numBeds:5,numBaths:5,description:'Mansion in the city'
+         location:{address:'2240',street:'Berlin',city:'Florence',state:'California',zip:'92340',longitude:'31.086579',latitude:'-72.357987'},
+         sqFeet:3950,numBeds:5,numBaths:5,yearBuilt:'1967',description:'Mansion in the city',askingPrice:312000.00
         };
 
       cref.insertOne( jsonRecord, {w:1, j:true},
